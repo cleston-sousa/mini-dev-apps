@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JsonToPojo</title>
+<style>
+	textarea {
+		width: 80%;
+		height: 400px;
+		font-family: monospace;
+		display: block;
+		margin-bottom: 10px;
+	}
+	
+	div {
+		width: 80%;
+		margin-bottom: 10px;	
+	}
+	
+	button {
+		width: 80%;
+		height: 35px;
+		margin-bottom: 10px;		
+	}
+</style>
+
+<script src="JsonToPojo.js"></script>
+
+<script>
+	function documentLoaded(evt) {	
+		document.querySelector('button').addEventListener("click", function(event) {
+				var json = document.querySelector('#input').value; 			
+				var lombokData = document.querySelector('#lombokData').checked;
+				var lombokBuilder = document.querySelector('#lombokBuilder').checked;
+				var innerClasses = document.querySelector('#innerClasses').checked;
+				var openapi = document.querySelector('#openapi').checked;
+				var jsonProperties = document.querySelector('#jsonProperties').checked;
+				document.querySelector('#output').value = jsonToPojoConverter().convert(json, lombokData, lombokBuilder, openapi, innerClasses, jsonProperties);
+			});
+	}
+</script>
+
+</head>
+<body onload="documentLoaded()">
+<h2>JsonToPojo</h2>
+<br>
+<input type="checkbox" id="lombokData"> @Lombok Data
+<input type="checkbox" id="lombokBuilder"> @Lombok Builder
+<input type="checkbox" id="innerClasses" checked> Inner classes
+<input type="checkbox" id="jsonProperties" checked> @JsonProperties Camel Case
+<input type="checkbox" id="openapi"> @Openapi
+<br>
+<textarea id="input">
+{
+    "id": 45,
+    "cost": 67.32,
+    "message": "Hello World!",
+    "available": true,
+    "insideLists": {
+      "random" : false,
+      "days": ["Mon", "Tue"],
+      "customer": [ 
+          { 
+              "name": "Bob",
+              "yearsOfService": 6 
+          },
+      
+          { 
+              "name": "Mary",
+              "yearsOfService": 3,
+              "gender": "female" 
+          }
+      ]
+    },
+    "expiration": "2016-05-1",
+    "Obj": {
+        "fld1": "Bob",
+        "fld2": "Mary"
+    },
+	"list_with_object":[
+		{ "birth_place":"home"}, {"favorite_color":"water"}
+	]
+}		
+</textarea>
+<button>&#9660;&nbsp;&nbsp;C O N V E R T&nbsp;&nbsp;&#9660;</button>
+<textarea id="output"></textarea>
+
+</body>
+</html>
